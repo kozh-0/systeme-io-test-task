@@ -3,10 +3,10 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer style={{ textAlign: "center" }}>
-      <Link href="https://github.com/kozh-0" target="_blank" className="footer_github">
+    <footer className="bg-sky-950 text-white flex justify-center items-center p-1">
+      <Link href="https://github.com/kozh-0" target="_blank">
         <span>GitHub</span>
-        <Image width={40} height={40} src="/github.png" alt="git" />
+        <Image width={40} height={40} src="/vercel.svg" alt="git" />
       </Link>
     </footer>
   );

@@ -1,6 +1,6 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import Header from "@/Layout/Header";
 import Footer from "@/Layout/Footer";
 
@@ -18,9 +18,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className}`}>
+      <body className={`${inter.className} bg-red`}>
         <Header />
-        <main>{children}</main>
+        <main className="h-[calc(100vh-79px)] py-5 md:container md:mx-auto">{children}</main>
         <Footer />
       </body>
     </html>
