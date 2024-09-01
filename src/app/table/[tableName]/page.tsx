@@ -10,7 +10,10 @@ export default async function TableName({ params }: { params: { tableName: strin
   return (
     <div>
       <div className="my-2">{params.tableName}</div>
-      <MyTable data={data} />
+      <MyTable
+        dataList={data.map((obj) => Object.values(obj))}
+        columnNames={Object.keys(data[0])}
+      />
     </div>
   );
 }
