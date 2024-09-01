@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} bg-red`}>
         <Header />
-        <main className="h-[calc(100vh-79px)] py-5 md:container md:mx-auto">{children}</main>
+        <main className="min-h-[calc(100vh-81px)] py-5 md:container md:mx-auto">{children}</main>
         <Footer />
       </body>
     </html>

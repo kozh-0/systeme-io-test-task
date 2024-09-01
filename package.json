@@ -1,6 +1,7 @@
 {
   "name": "systeme-io",
   "version": "0.1.0",
+  "author": "Dmitry Kozhevnikov",
   "private": true,
   "scripts": {
     "dev": "next dev --turbo",

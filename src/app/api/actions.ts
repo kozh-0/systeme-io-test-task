@@ -2,14 +2,14 @@ import { pages } from "./pages/data";
 import { pricePlans } from "./price-plans/data";
 import { products } from "./products/data";
 
-type EntityType = "products" | "price-plans" | "pages";
+type EntityType = "products" | "price-plans" | "pages" | "asd";
 type ReturnType<T extends EntityType> = T extends "products"
   ? typeof products
   : T extends "price-plans"
   ? typeof pricePlans
   : T extends "pages"
   ? typeof pages
-  : never;
+  : unknown;
 
 export const getEntity = async <T extends EntityType>(str: T): Promise<ReturnType<T>> => {
   "use server";
@@ -23,7 +23,7 @@ export const getEntity = async <T extends EntityType>(str: T): Promise<ReturnTyp
         res(products as ReturnType<T>);
 
       default:
-        throw new Error("Invalid option");
+        res([] as ReturnType<T>);
     }
   });
 };
