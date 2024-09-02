@@ -1,10 +1,14 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import Header from "@/Layout/Header";
 import Footer from "@/Layout/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
+
+export const viewport: Viewport = {
+  width: 800,
+};
 
 export const metadata: Metadata = {
   title: "systeme-io-test-task",
