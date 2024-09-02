@@ -7,7 +7,7 @@ interface MyTableProps {
   dataList: any[];
   columnNames: string[];
 }
-
+// TODO: Добавить сортировку колонок, стилизацию ссылок, написать докер файл
 export default function MyTable({ dataList, columnNames }: MyTableProps) {
   const [data, setData] = useState(dataList);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -66,8 +66,16 @@ export default function MyTable({ dataList, columnNames }: MyTableProps) {
       <table className="min-w-full">
         <tbody>
           <tr className="bg-gray-100 text-black">
-            {columnNames.map((columnTitle) => (
-              <th key={columnTitle} className="px-4 py-2 text-left">
+            {columnNames.map((columnTitle, idx) => (
+              <th
+                key={columnTitle}
+                className="px-4 py-2 text-left cursor-pointer border-l border-r border-slate-400 hover:bg-slate-200"
+                onClick={() => {
+                  console.log("sorting", idx, data);
+                  const sortedData = data.sort((a, b) => (a[idx] > b[idx] ? 1 : -1));
+                  console.log(sortedData);
+                }}
+              >
                 {capitalizeFirstLetter(columnTitle)}
               </th>
             ))}
