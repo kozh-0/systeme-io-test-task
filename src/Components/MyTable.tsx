@@ -1,6 +1,6 @@
 "use client";
 import { capitalizeFirstLetter, isDateValid } from "@/Helper";
-import { useCallback, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Modal from "./Modal";
 
 interface MyTableProps {
@@ -12,20 +12,15 @@ export default function MyTable({ dataList, columnNames }: MyTableProps) {
   const [data, setData] = useState(dataList);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleClose = () => {
-    setIsModalOpen(false);
-  };
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
-  const editRow = (row: any, rowIdx: number) => {
-    // setIsModalOpen(true);
-    const newData = [...data];
+  const url = new URL(window.location.href);
+  const editRow = (rowIdx: number) => {
+    url.searchParams.set("modalData", rowIdx.toString());
+    window.history.pushState(null, "", url.toString());
 
-    row[1] = "kek";
-
-    newData[rowIdx] = row;
-    console.log(rowIdx, row, newData);
-    // const newData = (data[rowIdx][1]);
-    setData(newData);
+    openModal();
   };
 
   console.log("RERENDER");
@@ -86,7 +81,7 @@ export default function MyTable({ dataList, columnNames }: MyTableProps) {
                   <td className="px-4 py-2">
                     <button
                       className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-1 px-2 rounded "
-                      onClick={() => editRow(row, rowIdx)}
+                      onClick={() => editRow(rowIdx)}
                     >
                       Edit
                     </button>
@@ -98,13 +93,65 @@ export default function MyTable({ dataList, columnNames }: MyTableProps) {
         </tbody>
       </table>
 
-      <Modal isOpen={isModalOpen} onClose={handleClose}>
-        <h2 className="text-lg font-bold">Modal Title</h2>
-        <p className="mt-2">This is the content of the modal.</p>
-        <button onClick={handleClose} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
-          Close
-        </button>
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <ModalInner closeModal={closeModal} data={data} setData={setData} />
       </Modal>
+    </div>
+  );
+}
+
+function ModalInner({
+  closeModal,
+  data,
+  setData,
+}: {
+  closeModal: () => void;
+  data: any[][];
+  setData: (data: React.SetStateAction<any>) => void;
+}) {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const submit = () => {
+    // Добавить проверку на пустоту строки?
+    const dataListId = parseInt(new URLSearchParams(location.search).get("modalData")!);
+    console.log(dataListId, inputRef.current!.value, data[dataListId][1]);
+
+    const newData = [...data];
+
+    newData[dataListId][1] = inputRef.current!.value;
+
+    setData(newData);
+    closeModal();
+  };
+
+  useEffect(() => {
+    inputRef.current!.focus();
+  }, []);
+
+  return (
+    <div>
+      <div className="flex flex-col items-center justify-center">
+        <label htmlFor="styled-input" className="mb-2 text-sm font-medium text-gray-700">
+          Edit Name/Descr
+        </label>
+        <input
+          type="text"
+          id="styled-input"
+          className="block w-80 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          placeholder="Type something..."
+          ref={inputRef}
+          onKeyDown={(e) => {
+            if (e.code === "Enter") {
+              submit();
+            }
+          }}
+        />
+      </div>
+      <div className="flex justify-end">
+        <button onClick={submit} className="mt-4 px-4 py-2 bg-green-500 text-white rounded">
+          Submit
+        </button>
+      </div>
     </div>
   );
 }
