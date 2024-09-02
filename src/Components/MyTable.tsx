@@ -7,7 +7,7 @@ interface MyTableProps {
   dataList: any[];
   columnNames: string[];
 }
-// TODO: Добавить сортировку колонок, стилизацию ссылок, написать докер файл
+// TODO: написать докер файл
 export default function MyTable({ dataList, columnNames }: MyTableProps) {
   const [data, setData] = useState(dataList);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,7 +17,7 @@ export default function MyTable({ dataList, columnNames }: MyTableProps) {
   const closeModal = useCallback(() => setIsModalOpen(false), []);
 
   const editRow = (rowIdx: number) => {
-    const url = new URL(window.location.href);
+    const url = new URL(location.href);
     url.searchParams.set("modalData", rowIdx.toString());
     window.history.pushState(null, "", url.toString());
 
@@ -69,7 +69,7 @@ export default function MyTable({ dataList, columnNames }: MyTableProps) {
     );
   }, []);
 
-  console.log("RERENDER");
+  // console.log("RERENDER");
 
   // Еще можно добавить виртуализацию
   return (
@@ -136,7 +136,7 @@ function ModalInner({
   const submit = () => {
     // Добавить проверку на пустоту строки?
     const dataListId = parseInt(new URLSearchParams(location.search).get("modalData")!);
-    console.log(dataListId, inputRef.current!.value, data[dataListId][1]);
+    // console.log(dataListId, inputRef.current!.value, data[dataListId][1]);
 
     const newData = [...data];
 
@@ -161,6 +161,7 @@ function ModalInner({
           id="styled-input"
           className="block w-80 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           placeholder="Type something..."
+          autoComplete="off"
           maxLength={25}
           ref={inputRef}
           onKeyDown={(e) => {

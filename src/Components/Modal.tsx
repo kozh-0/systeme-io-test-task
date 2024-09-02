@@ -10,12 +10,15 @@ interface ModalProps {
 
 const Modal = ({ isOpen, onClose, children }: ModalProps) => {
   const [isVisible, setIsVisible] = useState(isOpen);
-  console.log("modal render");
+  // console.log("modal render");
 
   useEffect(() => {
     if (isOpen) {
       setIsVisible(true);
     } else {
+      const url = new URL(location.href);
+      url.searchParams.delete("modalData");
+      window.history.pushState(null, "", url.toString());
       const timer = setTimeout(() => setIsVisible(false), 300);
       return () => clearTimeout(timer);
     }

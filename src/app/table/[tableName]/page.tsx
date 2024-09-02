@@ -9,12 +9,11 @@ export default async function TableName({ params }: { params: { tableName: strin
   if (!data.length) return <h2>No data</h2>;
 
   return (
-    <div>
-      <div className="my-2">{params.tableName}</div>
+    <>
       <MyTable
         dataList={data.map((obj) => Object.values(obj))}
         columnNames={Object.keys(data[0])}
       />
-    </div>
+    </>
   );
 }
