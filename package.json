@@ -8,8 +8,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "create-image": "docker build -t systeme-io-test-task .",
-    "container": "docker run -p 3000:3000 systeme-io-test-task"
+    "prod": "git pull && npm i && npm run build && pm2 delete systeme-io-test-task && pm2 start npm --name 'systeme-io-test-task' -- start",
+    "create-image": "sudo docker build -t systeme-io-test-task .",
+    "container": "sudo docker run -p 3000:3000 systeme-io-test-task"
   },
   "dependencies": {
     "react": "^18",
