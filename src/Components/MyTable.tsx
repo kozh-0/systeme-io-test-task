@@ -1,6 +1,6 @@
 "use client";
 import { capitalizeFirstLetter, isDateValid } from "@/Helper";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Modal from "./Modal";
 
 interface MyTableProps {
@@ -11,9 +11,10 @@ interface MyTableProps {
 export default function MyTable({ dataList, columnNames }: MyTableProps) {
   const [data, setData] = useState(dataList);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [sorting, setSorting] = useState({ columnName: "", asc: false });
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openModal = useCallback(() => setIsModalOpen(true), []);
+  const closeModal = useCallback(() => setIsModalOpen(false), []);
 
   const editRow = (rowIdx: number) => {
     const url = new URL(window.location.href);
@@ -23,9 +24,17 @@ export default function MyTable({ dataList, columnNames }: MyTableProps) {
     openModal();
   };
 
-  console.log("RERENDER");
+  const sortRows = (idx: number, columnName: string) => {
+    setSorting((p) => ({ columnName: columnName.split("\n")[0], asc: !p.asc }));
 
-  const formatCell = (cell: any) => {
+    const sortedData = sorting.asc
+      ? [...data].sort((a, b) => (a[idx] > b[idx] ? 1 : -1))
+      : [...data].sort((a, b) => (a[idx] > b[idx] ? -1 : 1));
+
+    setData(sortedData);
+  };
+
+  const formatCell = useCallback((cell: any) => {
     let output;
 
     switch (typeof cell) {
@@ -58,25 +67,30 @@ export default function MyTable({ dataList, columnNames }: MyTableProps) {
         {output}
       </td>
     );
-  };
+  }, []);
+
+  console.log("RERENDER");
 
   // Еще можно добавить виртуализацию
   return (
     <div className="bg-slate-800 p-6 text-neutral-100 rounded-3xl">
       <table className="min-w-full">
         <tbody>
-          <tr className="bg-gray-100 text-black">
+          <tr className="bg-gray-100 text-black select-none">
             {columnNames.map((columnTitle, idx) => (
               <th
                 key={columnTitle}
-                className="px-4 py-2 text-left cursor-pointer border-l border-r border-slate-400 hover:bg-slate-200"
-                onClick={() => {
-                  console.log("sorting", idx, data);
-                  const sortedData = data.sort((a, b) => (a[idx] > b[idx] ? 1 : -1));
-                  console.log(sortedData);
-                }}
+                className="px-4 py-2 cursor-pointer border-l border-r border-slate-400 hover:bg-slate-200"
+                onClick={(e) => sortRows(idx, (e.target as HTMLElement).innerText)}
               >
-                {capitalizeFirstLetter(columnTitle)}
+                <div className="flex justify-between">
+                  <span>{capitalizeFirstLetter(columnTitle)}</span>
+                  {sorting.columnName === capitalizeFirstLetter(columnTitle)
+                    ? sorting.asc
+                      ? "⟰"
+                      : "⟱"
+                    : ""}
+                </div>
               </th>
             ))}
             <th></th>

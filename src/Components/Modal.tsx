@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 interface ModalProps {
@@ -8,7 +8,7 @@ interface ModalProps {
   children: React.ReactNode;
 }
 
-export default function Modal({ isOpen, onClose, children }: ModalProps) {
+const Modal = ({ isOpen, onClose, children }: ModalProps) => {
   const [isVisible, setIsVisible] = useState(isOpen);
   console.log("modal render");
 
@@ -48,4 +48,6 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
     </div>,
     document.getElementById("modal-root") as HTMLElement
   );
-}
+};
+
+export default memo(Modal);
