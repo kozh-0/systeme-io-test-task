@@ -34,14 +34,14 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 
   return createPortal(
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 ${
+      className={`fixed flex items-center justify-center inset-0 z-50 bg-black bg-opacity-50 transition-opacity duration-300 ${
         isOpen ? "opacity-100" : "opacity-0"
       }`}
       onClick={handleBackdropClick}
     >
       <div
-        className="bg-white rounded-lg p-6 shadow-lg transition-transform duration-300 transform"
-        style={{ transform: isOpen ? "scale(1)" : "scale(0.9)" }}
+        className="bg-white absolute rounded-lg p-6 shadow-lg transition-transform duration-300 transform"
+        style={{ transform: isOpen ? "scale(1)" : "scale(0.9)", top: "15%" }}
       >
         <button onClick={onClose} className="absolute top-2 right-2 text-gray-600">
           &times;

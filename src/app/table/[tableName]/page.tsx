@@ -2,8 +2,7 @@ import { getEntity } from "@/app/api/actions";
 import MyTable from "@/Components/MyTable";
 
 export default async function TableName({ params }: { params: { tableName: string } }) {
-  // @ts-ignore
-  const data = (await getEntity(params.tableName)) as any[];
+  const data = (await getEntity(params.tableName as any)) as Record<string, any>[];
 
   // Перенаправить на 404 или свое
   if (!data.length) return <h2>No data</h2>;
