@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+
 export default function Table() {
-  return <div>Table page</div>;
+  redirect("/table/products");
 }

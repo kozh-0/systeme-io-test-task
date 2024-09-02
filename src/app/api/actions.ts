@@ -1,6 +1,4 @@
-import { pages } from "./pages/data";
-import { pricePlans } from "./price-plans/data";
-import { products } from "./products/data";
+import { pages, pricePlans, products } from "./data";
 
 type EntityType = "products" | "price-plans" | "pages" | "asd";
 type ReturnType<T extends EntityType> = T extends "products"
@@ -13,7 +11,7 @@ type ReturnType<T extends EntityType> = T extends "products"
 
 export const getEntity = async <T extends EntityType>(str: T): Promise<ReturnType<T>> => {
   "use server";
-  return new Promise((res, rej) => {
+  return new Promise((res) => {
     switch (str) {
       case "products":
         res(products as ReturnType<T>);

@@ -15,8 +15,8 @@ export default function MyTable({ dataList, columnNames }: MyTableProps) {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const url = new URL(window.location.href);
   const editRow = (rowIdx: number) => {
+    const url = new URL(window.location.href);
     url.searchParams.set("modalData", rowIdx.toString());
     window.history.pushState(null, "", url.toString());
 
@@ -62,10 +62,10 @@ export default function MyTable({ dataList, columnNames }: MyTableProps) {
 
   // Еще можно добавить виртуализацию
   return (
-    <div className="bg-slate-800 p-10 text-neutral-100">
+    <div className="bg-slate-800 p-6 text-neutral-100 rounded-3xl">
       <table className="min-w-full">
         <tbody>
-          <tr className="bg-gray-100 text-slate-700">
+          <tr className="bg-gray-100 text-black">
             {columnNames.map((columnTitle) => (
               <th key={columnTitle} className="px-4 py-2 text-left">
                 {capitalizeFirstLetter(columnTitle)}
@@ -75,7 +75,7 @@ export default function MyTable({ dataList, columnNames }: MyTableProps) {
           </tr>
           {data.map((row, rowIdx) => {
             return (
-              <tr key={row[0]} className="border-b-2 border-gray-500 px-4 py-2">
+              <tr key={row[0]} className="border-b-2 border-gray-500 px-4 py-2 hover:bg-slate-700">
                 <>
                   {row.map((cell: any) => formatCell(cell))}
                   <td className="px-4 py-2">
@@ -139,6 +139,7 @@ function ModalInner({
           id="styled-input"
           className="block w-80 p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           placeholder="Type something..."
+          maxLength={25}
           ref={inputRef}
           onKeyDown={(e) => {
             if (e.code === "Enter") {

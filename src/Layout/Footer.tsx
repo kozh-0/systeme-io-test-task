@@ -3,14 +3,14 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-sky-950 text-white flex justify-center items-center p-1">
+    <footer className="bg-sky-950 text-white flex justify-center items-center p-2">
       <Link
         href="https://github.com/kozh-0"
         target="_blank"
         className="flex justify-center items-center"
       >
-        <span className="pr-2">GitHub</span>
-        <Image width={40} height={40} src="/github.svg" alt="git" />
+        <Image className="pr-2" width={40} height={40} src="/github.svg" alt="git" />
+        <span>@kozh-0</span>
       </Link>
     </footer>
   );

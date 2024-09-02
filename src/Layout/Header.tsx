@@ -1,22 +1,30 @@
-// "use client";
-
+import { capitalizeFirstLetter } from "@/Helper";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Header() {
-  const myLink = `mx-4 px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2`;
+  const links = ["table"];
 
   return (
-    <header className="border-b-2 py-1">
-      <div>
-        <nav className="flex">
-          <Link className={myLink} href="/">
-            Home
+    <header className="bg-white text-black shadow-md">
+      <nav className="container mx-auto flex justify-between items-center p-4">
+        <div className="flex items-center">
+          <Link
+            className="flex justify-center items-center text-xl font-bold hover:text-gray-600"
+            href="/"
+          >
+            <Image className="pr-2" width={40} height={40} src="/favicon.ico" alt="git" />
+            ¯\_(ツ)_/¯
           </Link>
-          <Link className={myLink} href="/table">
-            Table
-          </Link>
-        </nav>
-      </div>
+          <div className="ml-12">
+            {links.map((el) => (
+              <Link key={el} href={`/${el}`} className="hover:text-gray-600 ml-8">
+                {capitalizeFirstLetter(el)}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </nav>
     </header>
   );
 }

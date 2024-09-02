@@ -20,7 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} bg-red`}>
         <Header />
-        <main className="min-h-[calc(100vh-87px)] py-5 md:container md:mx-auto">{children}</main>
+        <main className="min-h-[calc(100vh-111px)] py-5 px-2 md:container md:mx-auto">
+          {children}
+        </main>
         <Footer />
         <div id="modal-root"></div>
       </body>
