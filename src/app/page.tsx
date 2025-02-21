@@ -1,9 +1,19 @@
 import Link from "next/link";
 
 export default function Home() {
+  const skillsArr = ["TypeScript", "Next.js 14.2", "Tailwind", "SSR"];
   return (
     <>
       <h1>Hello, It&apos;s Dmitry, your future colleague 😊</h1> <br />
+      <h2>
+        This web app involves{" "}
+        {skillsArr.map((el) => (
+          <span key={el} className="myLink1">
+            {el}
+          </span>
+        ))}
+      </h2>{" "}
+      <br />
       <Link className="myLink" target="_blank" href="https://telegra.ph/Testovoe-zadanie-02-01-2">
         Test Task
       </Link>
